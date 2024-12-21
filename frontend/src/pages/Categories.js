@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, TextField, Table, TableHead, TableRow, TableCell, TableBody, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, } from '@mui/material';
+import { Container, Typography, Button, TextField, Table, TableHead, TableRow, TableCell, TableBody, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, Box, Toolbar } from '@mui/material';
 import axios from '../api/axios';
 
 function Categories() {
@@ -114,7 +114,7 @@ function Categories() {
 
     return (
         <Container>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom style={{ margin: '100px 0 0 0' }}>
                 Управление категориями
             </Typography>
 
@@ -124,6 +124,7 @@ function Categories() {
                 onChange={handleSearchChange}
                 fullWidth
                 margin="normal"
+                style={{ marginTop: '40px' }}
             />
 
             <Table>
@@ -155,9 +156,17 @@ function Categories() {
 
             </Table>
 
-            <Typography variant="h4" gutterBottom>
-                Добавление категорий
-            </Typography>
+            <Box sx={{ flexGrow: 1 }} style={{ marginTop: '50px' }}>
+                <Toolbar style={{ padding: '0px' }}>
+                    <Typography component="div" sx={{ flexGrow: 1 }} variant="h4" gutterBottom style={{ margin: '0' }}>
+                        Добавление категорий
+                    </Typography>
+
+                    <Button variant="contained" color="primary" onClick={handleAddCategory}>
+                        Добавить категорию
+                    </Button>
+                </Toolbar>
+            </Box>
 
             <form>
                 <TextField
@@ -173,10 +182,8 @@ function Categories() {
                     onChange={(e) => setDescription(e.target.value)}
                     fullWidth
                     margin="normal"
+                    style={{ marginBottom: '50px' }}
                 />
-                <Button variant="contained" color="primary" onClick={handleAddCategory}>
-                    Добавить категорию
-                </Button>
             </form>
 
             {/* Модальное окно для редактирования категории */}

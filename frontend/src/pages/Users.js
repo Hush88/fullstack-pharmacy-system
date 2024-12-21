@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, TextField, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import { Container, Typography, Button, TextField, Table, TableHead, TableRow, TableCell, TableBody, Box, Toolbar } from '@mui/material';
 import axios from '../api/axios';
 
 function Users() {
@@ -74,7 +74,7 @@ function Users() {
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom style={{ margin: '100px 0 0 0' }}>
         Управление пользователями
       </Typography>
 
@@ -84,6 +84,7 @@ function Users() {
         onChange={handleSearchChange}
         fullWidth
         margin="normal"
+        style={{ marginTop: '40px' }}
       />
 
       <Table>
@@ -109,9 +110,17 @@ function Users() {
         </TableBody>
       </Table>
 
-      <Typography variant="h4" gutterBottom>
-        Добавление пользователей
-      </Typography>
+      <Box sx={{ flexGrow: 1 }} style={{ marginTop: '50px' }}>
+        <Toolbar style={{ padding: '0px' }}>
+          <Typography component="div" sx={{ flexGrow: 1 }} variant="h4" gutterBottom>
+            Добавление пользователей
+          </Typography>
+
+          <Button variant="contained" color="primary" onClick={handleAddUser}>
+            Добавить пользователя
+          </Button>
+        </Toolbar>
+      </Box>
 
       <form>
         <TextField
@@ -136,9 +145,7 @@ function Users() {
           fullWidth
           margin="normal"
         />
-        <Button variant="contained" color="primary" onClick={handleAddUser}>
-          Добавить пользователя
-        </Button>
+
       </form>
     </Container>
   );

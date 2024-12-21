@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, TextField, Table, TableHead, TableRow, TableCell, TableBody, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, Select, MenuItem } from '@mui/material';
+import { Container, Typography, Button, TextField, Table, TableHead, TableRow, TableCell, TableBody, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, Select, MenuItem, Box, Toolbar } from '@mui/material';
 import axios from '../api/axios';
 
 function Products() {
@@ -119,7 +119,7 @@ function Products() {
   const handleSortChange = (event) => {
     const option = event.target.value;
     setSortOption(option);
-  
+
     let sortedProducts = [...filteredProducts];
     if (option === 'alphabet') {
       sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
@@ -134,10 +134,8 @@ function Products() {
         return categoryA.localeCompare(categoryB);
       });
     }
-  
     setFilteredProducts(sortedProducts);
   };
-  
 
   const handleSearchChange = (event) => {
     const query = event.target.value.toLowerCase();
@@ -152,7 +150,6 @@ function Products() {
     setFilteredProducts(filtered);
   };
 
-
   const handleSnackbarOpen = (message) => {
     setSnackbarMessage(message);
     setSnackbarOpen(true);
@@ -164,7 +161,7 @@ function Products() {
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom style={{ margin: '100px 0 0 0' }}>
         Управление товарами
       </Typography>
 
@@ -174,6 +171,7 @@ function Products() {
         onChange={handleSearchChange}
         fullWidth
         margin="normal"
+        style={{ marginTop: '40px' }}
       />
       <Select
         value={sortOption}
@@ -221,9 +219,18 @@ function Products() {
         </TableBody>
       </Table>
 
-      <Typography variant="h4" gutterBottom>
-        Добавление товаров
-      </Typography>
+      <Box sx={{ flexGrow: 1 }} style={{ marginTop: '50px' }}>
+        <Toolbar style={{ padding: '0px' }}>
+          <Typography component="div" sx={{ flexGrow: 1 }} variant="h4" gutterBottom style={{ margin: '0' }}>
+            Добавление товаров
+          </Typography>
+
+          <Button variant="contained" color="primary" onClick={handleAddProduct} >
+            Добавить товар
+          </Button>
+        </Toolbar>
+      </Box>
+
 
       <form>
         <TextField
@@ -254,6 +261,7 @@ function Products() {
           onChange={(e) => setCategoryId(e.target.value)}
           fullWidth
           margin="normal"
+          style={{ marginBottom: '50px' }}
           SelectProps={{
             native: true,
           }}
@@ -265,9 +273,6 @@ function Products() {
             </option>
           ))}
         </TextField>
-        <Button variant="contained" color="primary" onClick={handleAddProduct}>
-          Добавить товар
-        </Button>
       </form>
 
       {/* Модальное окно для редактирования товара */}
