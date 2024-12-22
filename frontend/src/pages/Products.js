@@ -30,7 +30,7 @@ function Products() {
         setProducts(response.data);
         setFilteredProducts(response.data); // Отображение всех товаров по умолчанию
       } catch (error) {
-        console.error('Ошибка при получении товаров:', error);
+        console.error('Помилка під час отримання товарів:', error);
       }
     };
     fetchProducts();
@@ -47,7 +47,7 @@ function Products() {
         });
         setCategories(response.data);
       } catch (error) {
-        console.error('Ошибка при получении категорий:', error);
+        console.error('Помилка під час отримання категорій:', error);
       }
     };
     fetchCategories();
@@ -65,10 +65,10 @@ function Products() {
         }
       );
       setProducts([...products, response.data]);
-      handleSnackbarOpen('Товар успешно добавлен!');
+      handleSnackbarOpen('Товар успішно додано!');
     } catch (error) {
-      console.error('Ошибка при добавлении товара:', error);
-      handleSnackbarOpen('Ошибка при добавлении товара');
+      console.error('Помилка під час додавання товару:', error);
+      handleSnackbarOpen('Помилка під час додавання товару');
     }
   };
 
@@ -94,10 +94,10 @@ function Products() {
       );
       setProducts(products.map((p) => (p.id === selectedProduct.id ? response.data : p)));
       setEditDialogOpen(false);
-      handleSnackbarOpen('Товар успешно отредактирован!');
+      handleSnackbarOpen('Товар успішно відредаговано!');
     } catch (error) {
-      console.error('Ошибка при редактировании товара:', error);
-      handleSnackbarOpen('Ошибка при редактировании товара');
+      console.error('Помилка під час редагування товару:', error);
+      handleSnackbarOpen('Помилка під час редагування товару');
     }
   };
 
@@ -109,10 +109,10 @@ function Products() {
         },
       });
       setProducts(products.filter((product) => product.id !== id));
-      handleSnackbarOpen('Товар успешно удален!');
+      handleSnackbarOpen('Товар успішно видалено!');
     } catch (error) {
-      console.error('Ошибка при удалении товара:', error);
-      handleSnackbarOpen('Ошибка при удалении товара');
+      console.error('Помилка під час видалення товару:', error);
+      handleSnackbarOpen('Помилка під час видалення товару');
     }
   };
 
@@ -162,11 +162,11 @@ function Products() {
   return (
     <Container>
       <Typography variant="h4" gutterBottom style={{ margin: '100px 0 0 0' }}>
-        Управление товарами
+        Управління товарами
       </Typography>
 
       <TextField
-        label="Поиск товаров"
+        label="Пошук товарів"
         value={searchQuery}
         onChange={handleSearchChange}
         fullWidth
@@ -180,21 +180,21 @@ function Products() {
         displayEmpty
         style={{ marginBottom: '20px' }}
       >
-        <MenuItem value="">Без сортировки</MenuItem>
-        <MenuItem value="alphabet">По алфавиту</MenuItem>
-        <MenuItem value="quantity">По количеству</MenuItem>
-        <MenuItem value="price">По цене</MenuItem>
-        <MenuItem value="category">По категории</MenuItem>
+        <MenuItem value="">Без сортування</MenuItem>
+        <MenuItem value="alphabet">За алфавітом</MenuItem>
+        <MenuItem value="quantity">За кількістю</MenuItem>
+        <MenuItem value="price">За ціною</MenuItem>
+        <MenuItem value="category">За категорією</MenuItem>
       </Select>
 
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Название</TableCell>
-            <TableCell>Цена</TableCell>
-            <TableCell>Количество</TableCell>
-            <TableCell>Категория</TableCell>
-            <TableCell>Действия</TableCell>
+            <TableCell>Назва</TableCell>
+            <TableCell>Ціна</TableCell>
+            <TableCell>Кількість</TableCell>
+            <TableCell>Категорія</TableCell>
+            <TableCell>Дії</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -208,10 +208,10 @@ function Products() {
               <TableCell>{categories.find((category) => category.id === product.categoryId)?.name || 'Неизвестно'}</TableCell>
               <TableCell>
                 <Button variant="contained" color="primary" onClick={() => handleEditProductClick(product)}>
-                  Редактировать
+                  Редагувати
                 </Button>
                 <Button variant="contained" color="secondary" onClick={() => handleDeleteProduct(product.id)} style={{ marginLeft: '10px' }}>
-                  Удалить
+                  Видалити
                 </Button>
               </TableCell>
             </TableRow>
@@ -222,11 +222,11 @@ function Products() {
       <Box sx={{ flexGrow: 1 }} style={{ marginTop: '50px' }}>
         <Toolbar style={{ padding: '0px' }}>
           <Typography component="div" sx={{ flexGrow: 1 }} variant="h4" gutterBottom style={{ margin: '0' }}>
-            Добавление товаров
+            Додавання товарів
           </Typography>
 
           <Button variant="contained" color="primary" onClick={handleAddProduct} >
-            Добавить товар
+            Додати товар
           </Button>
         </Toolbar>
       </Box>
@@ -234,21 +234,21 @@ function Products() {
 
       <form>
         <TextField
-          label="Название"
+          label="Назва"
           value={name}
           onChange={(e) => setName(e.target.value)}
           fullWidth
           margin="normal"
         />
         <TextField
-          label="Цена"
+          label="Ціна"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           fullWidth
           margin="normal"
         />
         <TextField
-          label="Количество"
+          label="Кількість"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           fullWidth
@@ -266,7 +266,7 @@ function Products() {
             native: true,
           }}
         >
-          <option value="" >Выберите категорию</option>
+          <option value="" >Оберіть категорію</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -277,27 +277,27 @@ function Products() {
 
       {/* Модальное окно для редактирования товара */}
       <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>
-        <DialogTitle>Редактирование товара</DialogTitle>
+        <DialogTitle>Редагування товару</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Пожалуйста, внесите изменения в данные товара.
+            Будь ласка, внесіть зміни до даних товару.
           </DialogContentText>
           <TextField
-            label="Название"
+            label="Назва"
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
             margin="normal"
           />
           <TextField
-            label="Цена"
+            label="Ціна"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             fullWidth
             margin="normal"
           />
           <TextField
-            label="Количество"
+            label="Кількість"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
             fullWidth
@@ -314,7 +314,7 @@ function Products() {
               native: true,
             }}
           >
-            <option value="" >Выберите категорию</option>
+            <option value="" >Оберіть категорію</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -324,10 +324,10 @@ function Products() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)} color="secondary">
-            Отмена
+            Скасування
           </Button>
           <Button onClick={handleEditProduct} color="primary">
-            Сохранить
+            Зберегти
           </Button>
         </DialogActions>
       </Dialog>

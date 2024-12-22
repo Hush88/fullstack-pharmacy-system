@@ -8,22 +8,22 @@ function NavBar() {
             <AppBar position="fixed">
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Система управления аптечным складом
+                        Система управління аптечним складом
                     </Typography>
                     <Button color="button" variant="contained" style={{ margin: '0 5px 0 5px' }} component={Link} to="/">
-                        Главная
+                        Головна
                     </Button>
                     <Button color="button" variant="contained" style={{ margin: '0 5px 0 5px' }} component={Link} to="/products">
-                        Товары
+                        Товари
                     </Button>
                     <Button color="button" variant="contained" style={{ margin: '0 5px 0 5px' }} component={Link} to="/categories">
-                        Категории
+                        Категорії
                     </Button>
                     <Button color="button" variant="contained" style={{ margin: '0 5px 0 5px' }} component={Link} to="/users">
-                        Пользователи
+                        Користувачі
                     </Button>
                     <Button color="button" variant="contained" style={{ margin: '0 5px 0 5px' }} component={Link} to="/login">
-                        Вход
+                        Вхід
                     </Button>
                 </Toolbar>
             </AppBar>

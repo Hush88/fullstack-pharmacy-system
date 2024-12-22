@@ -25,7 +25,7 @@ function Categories() {
                 setCategories(response.data);
                 setFilteredCategories(response.data); // Отображение всех категорий
             } catch (error) {
-                console.error('Ошибка при получении категорий:', error);
+                console.error('Помилка під час отримання категорій:', error);
             }
         };
         fetchCategories();
@@ -44,9 +44,9 @@ function Categories() {
                 }
             );
             setCategories([...categories, response.data]);
-            handleSnackbarOpen('Категория успешно добавлена!');
+            handleSnackbarOpen('Категорію успішно додано!');
         } catch (error) {
-            console.error('Ошибка при добавлении категории:', error);
+            console.error('Помилка під час додавання категорії:', error);
         }
     };
 
@@ -70,9 +70,9 @@ function Categories() {
             );
             setCategories(categories.map((c) => (c.id === selectedCategory.id ? response.data : c)));
             setEditDialogOpen(false);
-            handleSnackbarOpen('Категория успешно отредактирована!');
+            handleSnackbarOpen('Категорію успішно відредаговано!');
         } catch (error) {
-            console.error('Ошибка при редактировании категории:', error);
+            console.error('Помилка під час редагування категорії:', error);
         }
     };
 
@@ -84,9 +84,9 @@ function Categories() {
                 },
             });
             setCategories(categories.filter((category) => category.id !== id));
-            handleSnackbarOpen('Категория успешно удалена!');
+            handleSnackbarOpen('Категорію успішно видалено!');
         } catch (error) {
-            console.error('Ошибка при удалении категории:', error);
+            console.error('Помилка під час видалення категорії:', error);
         }
     };
 
@@ -115,11 +115,11 @@ function Categories() {
     return (
         <Container>
             <Typography variant="h4" gutterBottom style={{ margin: '100px 0 0 0' }}>
-                Управление категориями
+                Управління категоріями
             </Typography>
 
             <TextField
-                label="Поиск категорий"
+                label="Пошук категорій"
                 value={searchQuery}
                 onChange={handleSearchChange}
                 fullWidth
@@ -130,9 +130,9 @@ function Categories() {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Название</TableCell>
-                        <TableCell style={{ maxWidth: 200 }}>Описание</TableCell>
-                        <TableCell>Действия</TableCell>
+                        <TableCell>Назва</TableCell>
+                        <TableCell style={{ maxWidth: 200 }}>Опис</TableCell>
+                        <TableCell>Дії</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -144,10 +144,10 @@ function Categories() {
                             </TableCell>
                             <TableCell>
                                 <Button variant="contained" color="primary" onClick={() => handleEditCategoryClick(category)}>
-                                    Редактировать
+                                    Редагувати
                                 </Button>
                                 <Button variant="contained" color="secondary" onClick={() => handleDeleteCategory(category.id)} style={{ marginLeft: '10px' }}>
-                                    Удалить
+                                    Видалити
                                 </Button>
                             </TableCell>
                         </TableRow>
@@ -159,25 +159,25 @@ function Categories() {
             <Box sx={{ flexGrow: 1 }} style={{ marginTop: '50px' }}>
                 <Toolbar style={{ padding: '0px' }}>
                     <Typography component="div" sx={{ flexGrow: 1 }} variant="h4" gutterBottom style={{ margin: '0' }}>
-                        Добавление категорий
+                        Додавання категорій
                     </Typography>
 
                     <Button variant="contained" color="primary" onClick={handleAddCategory}>
-                        Добавить категорию
+                        Додати категорію
                     </Button>
                 </Toolbar>
             </Box>
 
             <form>
                 <TextField
-                    label="Название категории"
+                    label="Назва категорії"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     fullWidth
                     margin="normal"
                 />
                 <TextField
-                    label="Описание категории"
+                    label="Опис категорії"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     fullWidth
@@ -188,20 +188,20 @@ function Categories() {
 
             {/* Модальное окно для редактирования категории */}
             <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>
-                <DialogTitle>Редактирование категории</DialogTitle>
+                <DialogTitle>Редагування категорії</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Пожалуйста, внесите изменения в данные категории.
+                        Будь ласка, внесіть зміни в ці категорії.
                     </DialogContentText>
                     <TextField
-                        label="Название категории"
+                        label="Назва категорії"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         fullWidth
                         margin="normal"
                     />
                     <TextField
-                        label="Описание категории"
+                        label="Опис категорії"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         fullWidth
@@ -210,10 +210,10 @@ function Categories() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setEditDialogOpen(false)} color="secondary">
-                        Отмена
+                        Скасування
                     </Button>
                     <Button onClick={handleEditCategory} color="primary">
-                        Сохранить
+                        Зберегти
                     </Button>
                 </DialogActions>
             </Dialog>

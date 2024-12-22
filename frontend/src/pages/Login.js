@@ -15,8 +15,8 @@ function Login() {
       localStorage.setItem('token', response.data.token);
       navigate('/');
     } catch (error) {
-      console.error('Ошибка при входе в систему:', error);
-      alert('Неправильные учетные данные');
+      console.error('Помилка під час входу в систему:', error);
+      alert('Неправильні облікові дані');
     }
   };
 
@@ -24,12 +24,12 @@ function Login() {
     <Container maxWidth="xs">
 
       <Typography variant="h4" align="center" gutterBottom style={{ margin: '100px 0 0 0' }}>
-        Вход в систему
+        Вхід у систему
       </Typography>
 
       <form onSubmit={handleSubmit}>
         <TextField
-          label="Имя пользователя"
+          label="Ім'я користувача"
           fullWidth
           margin="normal"
           style={{ marginTop: '20px' }}
@@ -45,7 +45,7 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button type="submit" variant="contained" color="primary" style={{ marginTop: '15px' }} fullWidth>
-          Войти
+          Увійти
         </Button>
       </form>
     </Container>

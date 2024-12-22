@@ -22,7 +22,7 @@ function Users() {
         setUsers(response.data);
         setFilteredUsers(response.data); // Отображение всех пользователей
       } catch (error) {
-        console.error('Ошибка при получении пользователей:', error);
+        console.error('Помилка під час отримання користувачів:', error);
       }
     };
     fetchUsers();
@@ -42,7 +42,7 @@ function Users() {
       );
       setUsers([...users, response.data]);
     } catch (error) {
-      console.error('Ошибка при добавлении пользователя:', error);
+      console.error('Помилка під час додавання користувача:', error);
     }
   };
 
@@ -55,7 +55,7 @@ function Users() {
       });
       setUsers(users.filter((user) => user.id !== id));
     } catch (error) {
-      console.error('Ошибка при удалении пользователя:', error);
+      console.error('Помилка під час видалення користувача:', error);
     }
   };
 
@@ -75,11 +75,11 @@ function Users() {
   return (
     <Container>
       <Typography variant="h4" gutterBottom style={{ margin: '100px 0 0 0' }}>
-        Управление пользователями
+        Управління користувачами
       </Typography>
 
       <TextField
-        label="Поиск пользователей"
+        label="Пошук користувачів"
         value={searchQuery}
         onChange={handleSearchChange}
         fullWidth
@@ -90,9 +90,9 @@ function Users() {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Имя пользователя</TableCell>
+            <TableCell>Ім'я користувача</TableCell>
             <TableCell>Роль</TableCell>
-            <TableCell>Действия</TableCell>
+            <TableCell>Дії</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -102,7 +102,7 @@ function Users() {
               <TableCell>{user.role}</TableCell>
               <TableCell>
                 <Button variant="contained" color="secondary" onClick={() => handleDeleteUser(user.id)}>
-                  Удалить
+                  Видалити
                 </Button>
               </TableCell>
             </TableRow>
@@ -113,18 +113,18 @@ function Users() {
       <Box sx={{ flexGrow: 1 }} style={{ marginTop: '50px' }}>
         <Toolbar style={{ padding: '0px' }}>
           <Typography component="div" sx={{ flexGrow: 1 }} variant="h4" gutterBottom>
-            Добавление пользователей
+            Додавання користувачів
           </Typography>
 
           <Button variant="contained" color="primary" onClick={handleAddUser}>
-            Добавить пользователя
+            Додати користувача
           </Button>
         </Toolbar>
       </Box>
 
       <form>
         <TextField
-          label="Имя пользователя"
+          label="Ім'я користувача"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           fullWidth
