@@ -22,17 +22,21 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Запущено бекенд аптечної системи!');
+  res.send('Запущено бекенд аптечної системи!');
 });
 
 // Синхронізація бази даних і запуск сервера
-sequelize.sync({ force: false })
-  .then(() => {
-    console.log('Всі моделі були успішно синхронізовані.');
-    app.listen(PORT, () => {
-      console.log(`Сервер працює на порту ${PORT}`);
+if (process.env.NODE_ENV !== 'test') {
+  sequelize.sync({ force: false })
+    .then(() => {
+      console.log('Всі моделі були успішно синхронізовані.');
+      app.listen(PORT, () => {
+        console.log(`Сервер працює на порту ${PORT}`);
+      });
+    })
+    .catch((error) => {
+      console.error('Не вдається синхронізувати базу даних:', error);
     });
-  })
-  .catch((error) => {
-    console.error('Не вдається синхронізувати базу даних:', error);
-  });
+}
+
+module.exports = app;
