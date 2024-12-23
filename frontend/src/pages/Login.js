@@ -13,7 +13,6 @@ function Login() {
     try {
       const response = await axios.post('/auth/login', { username, password });
       localStorage.setItem('token', response.data.token);
-      console.log(localStorage.getItem('token')); // Временно добавьте для отладки
       navigate('/');
     } catch (error) {
       console.error('Помилка під час входу в систему:', error);

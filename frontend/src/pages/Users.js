@@ -26,7 +26,7 @@ function Users() {
           },
         });
         setUsers(response.data);
-        setFilteredUsers(response.data); // Отображение всех пользователей
+        setFilteredUsers(response.data);
       } catch (error) {
         console.error('Помилка під час отримання користувачів:', error);
       }
@@ -55,7 +55,7 @@ function Users() {
   const handleEditUserClick = (user) => {
     setSelectedUser(user);
     setEditUsername(user.username);
-    setEditPassword(''); // Пароль оставляем пустым
+    setEditPassword('');
     setEditRole(user.role);
     setEditDialogOpen(true);
   };
@@ -74,7 +74,7 @@ function Users() {
       setUsers(users.map((user) => (user.id === selectedUser.id ? response.data : user)));
       setEditDialogOpen(false);
     } catch (error) {
-      console.error('Ошибка при обновлении пользователя:', error);
+      console.error('Помилка під час оновлення користувача:', error);
     }
   };
 

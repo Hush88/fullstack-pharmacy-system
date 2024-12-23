@@ -4,38 +4,36 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const { authenticateToken, authorizeRoles } = require('../middleware/authMiddleware');
 
-// Создание пользователя (только для admin)
+// Створення користувача (тільки для admin)
 router.post('/', authenticateToken, authorizeRoles('admin'), async (req, res) => {
   try {
     const { username, password, role } = req.body;
 
-    // Проверка, что все данные переданы
     if (!username || !password || !role) {
-      return res.status(400).json({ message: 'Все поля обязательны' });
+      return res.status(400).json({ message: "Усі поля обов'язкові" });
     }
-    // Хеширование пароля
-    const hashedPassword = await bcrypt.hash(password, 10); // "password" - данные, "10" - число итераций соли
 
-    // Создание пользователя
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = await User.create({ username, password: hashedPassword, role });
     res.status(201).json(user);
   } catch (error) {
-    console.error('Ошибка при создании пользователя:', error);
-    res.status(500).json({ message: 'Ошибка при создании пользователя', error: error.message });
+    console.error('Помилка під час створення користувача:', error);
+    res.status(500).json({ message: 'Помилка під час створення користувача', error: error.message });
   }
 });
 
-// Получение всех пользователей (только для admin)
+// Отримання всіх користувачів (тільки для admin)
 router.get('/', authenticateToken, authorizeRoles('admin'), async (req, res) => {
   try {
     const users = await User.findAll();
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: 'Ошибка при получении пользователей', error: error.message });
+    res.status(500).json({ message: 'Помилка під час отримання користувачів', error: error.message });
   }
 });
 
-// Обновление пользователя (только для admin)
+// Оновлення користувача (тільки для admin)
 router.put('/:id', authenticateToken, authorizeRoles('admin'), async (req, res) => {
   try {
     const { id } = req.params;
@@ -43,7 +41,7 @@ router.put('/:id', authenticateToken, authorizeRoles('admin'), async (req, res) 
     const user = await User.findByPk(id);
 
     if (!user) {
-      return res.status(404).json({ message: 'Пользователь не найден' });
+      return res.status(404).json({ message: 'Користувач не знайдений' });
     }
 
     user.username = username;
@@ -55,24 +53,24 @@ router.put('/:id', authenticateToken, authorizeRoles('admin'), async (req, res) 
 
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ message: 'Ошибка при обновлении пользователя', error: error.message });
+    res.status(400).json({ message: 'Помилка під час оновлення користувача', error: error.message });
   }
 });
 
-// Удаление пользователя (только для admin)
+// Видалення користувача (тільки для admin)
 router.delete('/:id', authenticateToken, authorizeRoles('admin'), async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findByPk(id);
 
     if (!user) {
-      return res.status(404).json({ message: 'Пользователь не найден' });
+      return res.status(404).json({ message: 'Користувач не знайдений' });
     }
 
     await user.destroy();
-    res.status(200).json({ message: 'Пользователь успешно удален' });
+    res.status(200).json({ message: 'Користувача успішно видалено' });
   } catch (error) {
-    res.status(500).json({ message: 'Ошибка при удалении пользователя', error: error.message });
+    res.status(500).json({ message: 'Помилка під час видалення користувача', error: error.message });
   }
 });
 
