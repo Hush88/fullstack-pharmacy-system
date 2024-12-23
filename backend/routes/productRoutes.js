@@ -7,12 +7,12 @@ const { authenticateToken, authorizeRoles } = require('../middleware/authMiddlew
 // Создание товара (только для admin и manager)
 router.post('/', authenticateToken, authorizeRoles('admin', 'manager'), async (req, res) => {
   try {
-    const { name, price, quantity, expiration_date, categoryId } = req.body;
+    const { name, price, quantity, categoryId } = req.body;
     const category = await Category.findByPk(categoryId);
     if (!category) {
       return res.status(400).json({ message: 'Категория не найдена' });
     }
-    const product = await Product.create({ name, price, quantity, expiration_date, categoryId });
+    const product = await Product.create({ name, price, quantity, categoryId });
     res.status(201).json(product);
   } catch (error) {
     res.status(400).json({ message: 'Ошибка при создании товара', error: error.message });
@@ -33,7 +33,7 @@ router.get('/', authenticateToken, async (req, res) => {
 router.put('/:id', authenticateToken, authorizeRoles('admin', 'manager'), async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, price, quantity, expiration_date, categoryId } = req.body;
+    const { name, price, quantity, categoryId } = req.body;
     const product = await Product.findByPk(id);
 
     if (!product) {
@@ -48,7 +48,6 @@ router.put('/:id', authenticateToken, authorizeRoles('admin', 'manager'), async 
     product.name = name;
     product.price = price;
     product.quantity = quantity;
-    product.expiration_date = expiration_date;
     product.categoryId = categoryId;
     await product.save();
 

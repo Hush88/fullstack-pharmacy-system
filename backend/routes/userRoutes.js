@@ -8,11 +8,20 @@ const { authenticateToken, authorizeRoles } = require('../middleware/authMiddlew
 router.post('/', authenticateToken, authorizeRoles('admin'), async (req, res) => {
   try {
     const { username, password, role } = req.body;
-    const password_hash = await bcrypt.hash(password, 10);
-    const user = await User.create({ username, password_hash, role });
+
+    // Проверка, что все данные переданы
+    if (!username || !password || !role) {
+      return res.status(400).json({ message: 'Все поля обязательны' });
+    }
+    // Хеширование пароля
+    const hashedPassword = await bcrypt.hash(password, 10); // "password" - данные, "10" - число итераций соли
+
+    // Создание пользователя
+    const user = await User.create({ username, password: hashedPassword, role });
     res.status(201).json(user);
   } catch (error) {
-    res.status(400).json({ message: 'Ошибка при создании пользователя', error: error.message });
+    console.error('Ошибка при создании пользователя:', error);
+    res.status(500).json({ message: 'Ошибка при создании пользователя', error: error.message });
   }
 });
 

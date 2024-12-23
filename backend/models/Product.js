@@ -15,9 +15,6 @@ const Product = sequelize.define('Product', {
     type: DataTypes.INTEGER,
     defaultValue: 0,
   },
-  expiration_date: {
-    type: DataTypes.DATE,
-  },
 });
 
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
