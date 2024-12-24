@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, TextField, Table, TableHead, TableRow, TableCell, TableBody, Box, Toolbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Container, Typography, Button, TextField, Table, TableHead, TableRow, TableCell, TableBody, Box, Toolbar, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar } from '@mui/material';
 import axios from '../api/axios';
 
 function Users() {
@@ -14,8 +14,8 @@ function Users() {
   const [editUsername, setEditUsername] = useState('');
   const [editPassword, setEditPassword] = useState('');
   const [editRole, setEditRole] = useState('');
-
-
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -34,7 +34,6 @@ function Users() {
     fetchUsers();
   }, []);
 
-
   const handleAddUser = async () => {
     try {
       const response = await axios.post(
@@ -46,9 +45,12 @@ function Users() {
           },
         }
       );
-      setUsers([...users, response.data]);
+      setUsers((prevUsers) => [...prevUsers, response.data]);
+      setFilteredUsers((prevUsers) => [...prevUsers, response.data]);
+      handleSnackbarOpen('Користувач успішно доданий!');
     } catch (error) {
       console.error('Помилка під час додавання користувача:', error);
+      handleSnackbarOpen('Помилка під час додавання користувача.');
     }
   };
 
@@ -71,13 +73,19 @@ function Users() {
           },
         }
       );
-      setUsers(users.map((user) => (user.id === selectedUser.id ? response.data : user)));
+      setUsers((prevUsers) =>
+        prevUsers.map((user) => (user.id === selectedUser.id ? response.data : user))
+      );
+      setFilteredUsers((prevUsers) =>
+        prevUsers.map((user) => (user.id === selectedUser.id ? response.data : user))
+      );
       setEditDialogOpen(false);
+      handleSnackbarOpen('Користувача успішно оновлено!');
     } catch (error) {
       console.error('Помилка під час оновлення користувача:', error);
+      handleSnackbarOpen('Помилка під час оновлення користувача.');
     }
   };
-
 
   const handleDeleteUser = async (id) => {
     try {
@@ -86,9 +94,12 @@ function Users() {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      setUsers(users.filter((user) => user.id !== id));
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+      setFilteredUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+      handleSnackbarOpen('Користувача успішно видалено!');
     } catch (error) {
       console.error('Помилка під час видалення користувача:', error);
+      handleSnackbarOpen('Помилка під час видалення користувача.');
     }
   };
 
@@ -103,6 +114,15 @@ function Users() {
     );
 
     setFilteredUsers(filtered);
+  };
+
+  const handleSnackbarOpen = (message) => {
+    setSnackbarMessage(message);
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -134,10 +154,19 @@ function Users() {
               <TableCell>{user.username}</TableCell>
               <TableCell>{user.role}</TableCell>
               <TableCell>
-                <Button variant="contained" color="primary" onClick={() => handleEditUserClick(user)}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleEditUserClick(user)}
+                >
                   Редагувати
                 </Button>
-                <Button variant="contained" color="secondary" onClick={() => handleDeleteUser(user.id)} style={{ marginLeft: '10px' }}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => handleDeleteUser(user.id)}
+                  style={{ marginLeft: '10px' }}
+                >
                   Видалити
                 </Button>
               </TableCell>
@@ -181,21 +210,20 @@ function Users() {
           fullWidth
           margin="normal"
         />
-
       </form>
 
       <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>
-        <DialogTitle>Редактирование пользователя</DialogTitle>
+        <DialogTitle>Редагування користувача</DialogTitle>
         <DialogContent>
           <TextField
-            label="Имя пользователя"
+            label="Ім'я користувача"
             value={editUsername}
             onChange={(e) => setEditUsername(e.target.value)}
             fullWidth
             margin="normal"
           />
           <TextField
-            label="Пароль (оставьте пустым, если не хотите менять)"
+            label="Пароль (залиште порожнім, якщо не хочете змінювати)"
             type="password"
             value={editPassword}
             onChange={(e) => setEditPassword(e.target.value)}
@@ -212,14 +240,20 @@ function Users() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)} color="secondary">
-            Отмена
+            Скасувати
           </Button>
           <Button onClick={handleEditUser} color="primary">
-            Сохранить
+            Зберегти
           </Button>
         </DialogActions>
       </Dialog>
 
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+      />
     </Container>
   );
 }

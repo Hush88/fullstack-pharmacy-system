@@ -34,21 +34,23 @@ function Categories() {
 
     const handleAddCategory = async () => {
         try {
-            const response = await axios.post(
-                '/categories',
-                { name, description },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                }
-            );
-            setCategories([...categories, response.data]);
-            handleSnackbarOpen('Категорію успішно додано!');
+          const response = await axios.post(
+            '/categories',
+            { name, description },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+            }
+          );
+          setCategories((prevCategories) => [...prevCategories, response.data]);
+          setFilteredCategories((prevCategories) => [...prevCategories, response.data]);
+          handleSnackbarOpen('Категорію успішно додано!');
         } catch (error) {
-            console.error('Помилка під час додавання категорії:', error);
+          console.error('Помилка під час додавання категорії:', error);
+          handleSnackbarOpen('Помилка під час додавання категорії');
         }
-    };
+      };
 
     const handleEditCategoryClick = (category) => {
         setSelectedCategory(category);
@@ -59,36 +61,50 @@ function Categories() {
 
     const handleEditCategory = async () => {
         try {
-            const response = await axios.put(
-                `/categories/${selectedCategory.id}`,
-                { name, description },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                }
-            );
-            setCategories(categories.map((c) => (c.id === selectedCategory.id ? response.data : c)));
-            setEditDialogOpen(false);
-            handleSnackbarOpen('Категорію успішно відредаговано!');
+          const response = await axios.put(
+            `/categories/${selectedCategory.id}`,
+            { name, description },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+            }
+          );
+          setCategories((prevCategories) =>
+            prevCategories.map((category) =>
+              category.id === selectedCategory.id ? response.data : category
+            )
+          );
+          setFilteredCategories((prevCategories) =>
+            prevCategories.map((category) =>
+              category.id === selectedCategory.id ? response.data : category
+            )
+          );
+          setEditDialogOpen(false);
+          handleSnackbarOpen('Категорію успішно відредаговано!');
         } catch (error) {
-            console.error('Помилка під час редагування категорії:', error);
+          console.error('Помилка під час редагування категорії:', error);
+          handleSnackbarOpen('Помилка під час редагування категорії');
         }
-    };
+      };
 
-    const handleDeleteCategory = async (id) => {
+      const handleDeleteCategory = async (id) => {
         try {
-            await axios.delete(`/categories/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
-            setCategories(categories.filter((category) => category.id !== id));
-            handleSnackbarOpen('Категорію успішно видалено!');
+          await axios.delete(`/categories/${id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          });
+          setCategories((prevCategories) => prevCategories.filter((category) => category.id !== id));
+          setFilteredCategories((prevCategories) =>
+            prevCategories.filter((category) => category.id !== id)
+          );
+          handleSnackbarOpen('Категорію успішно видалено!');
         } catch (error) {
-            console.error('Помилка під час видалення категорії:', error);
+          console.error('Помилка під час видалення категорії:', error);
+          handleSnackbarOpen('Помилка під час видалення категорії');
         }
-    };
+      };
 
     const handleSearchChange = (event) => {
         const query = event.target.value.toLowerCase();
@@ -210,7 +226,7 @@ function Categories() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setEditDialogOpen(false)} color="secondary">
-                        Скасування
+                        Скасувати
                     </Button>
                     <Button onClick={handleEditCategory} color="primary">
                         Зберегти

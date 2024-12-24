@@ -64,13 +64,15 @@ function Products() {
           },
         }
       );
-      setProducts([...products, response.data]);
+      setProducts((prevProducts) => [...prevProducts, response.data]);
+      setFilteredProducts((prevProducts) => [...prevProducts, response.data]);
       handleSnackbarOpen('Товар успішно додано!');
     } catch (error) {
       console.error('Помилка під час додавання товару:', error);
       handleSnackbarOpen('Помилка під час додавання товару');
     }
   };
+  
 
   const handleEditProductClick = (product) => {
     setSelectedProduct(product);
@@ -92,7 +94,16 @@ function Products() {
           },
         }
       );
-      setProducts(products.map((p) => (p.id === selectedProduct.id ? response.data : p)));
+      setProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product.id === selectedProduct.id ? response.data : product
+        )
+      );
+      setFilteredProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product.id === selectedProduct.id ? response.data : product
+        )
+      );
       setEditDialogOpen(false);
       handleSnackbarOpen('Товар успішно відредаговано!');
     } catch (error) {
@@ -100,6 +111,7 @@ function Products() {
       handleSnackbarOpen('Помилка під час редагування товару');
     }
   };
+  
 
   const handleDeleteProduct = async (id) => {
     try {
@@ -108,13 +120,15 @@ function Products() {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      setProducts(products.filter((product) => product.id !== id));
+      setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
+      setFilteredProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
       handleSnackbarOpen('Товар успішно видалено!');
     } catch (error) {
       console.error('Помилка під час видалення товару:', error);
       handleSnackbarOpen('Помилка під час видалення товару');
     }
   };
+  
 
   const handleSortChange = (event) => {
     const option = event.target.value;
@@ -324,7 +338,7 @@ function Products() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)} color="secondary">
-            Скасування
+            Скасувати
           </Button>
           <Button onClick={handleEditProduct} color="primary">
             Зберегти
