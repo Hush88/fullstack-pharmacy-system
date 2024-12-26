@@ -249,6 +249,7 @@ function Products() {
       <form>
         <TextField
           label="Назва"
+          name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           fullWidth
@@ -256,6 +257,7 @@ function Products() {
         />
         <TextField
           label="Ціна"
+          name="price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           fullWidth
@@ -263,6 +265,7 @@ function Products() {
         />
         <TextField
           label="Кількість"
+          name="quantity"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           fullWidth
@@ -271,6 +274,7 @@ function Products() {
         <TextField
           select
           label=""
+          name="categoryId"
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
           fullWidth
@@ -298,6 +302,7 @@ function Products() {
           </DialogContentText>
           <TextField
             label="Назва"
+            name="new_name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth

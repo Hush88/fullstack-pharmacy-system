@@ -30,6 +30,7 @@ function Login() {
       <form onSubmit={handleSubmit}>
         <TextField
           label="Ім'я користувача"
+          name="username"
           fullWidth
           margin="normal"
           style={{ marginTop: '20px' }}
@@ -39,6 +40,7 @@ function Login() {
         <TextField
           label="Пароль"
           type="password"
+          name="password"
           fullWidth
           margin="normal"
           value={password}

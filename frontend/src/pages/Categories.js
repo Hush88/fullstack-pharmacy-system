@@ -187,6 +187,7 @@ function Categories() {
             <form>
                 <TextField
                     label="Назва категорії"
+                    name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     fullWidth
@@ -194,6 +195,7 @@ function Categories() {
                 />
                 <TextField
                     label="Опис категорії"
+                    name="description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     fullWidth
@@ -211,6 +213,7 @@ function Categories() {
                     </DialogContentText>
                     <TextField
                         label="Назва категорії"
+                        name="new_name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         fullWidth
@@ -218,6 +221,7 @@ function Categories() {
                     />
                     <TextField
                         label="Опис категорії"
+                        name="new_description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         fullWidth

@@ -190,6 +190,7 @@ function Users() {
       <form>
         <TextField
           label="Ім'я користувача"
+          name="name"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           fullWidth
@@ -197,6 +198,7 @@ function Users() {
         />
         <TextField
           label="Пароль"
+          name="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -205,6 +207,7 @@ function Users() {
         />
         <TextField
           label="Роль"
+          name="role"
           value={role}
           onChange={(e) => setRole(e.target.value)}
           fullWidth
@@ -217,6 +220,7 @@ function Users() {
         <DialogContent>
           <TextField
             label="Ім'я користувача"
+            name="new_name"
             value={editUsername}
             onChange={(e) => setEditUsername(e.target.value)}
             fullWidth
