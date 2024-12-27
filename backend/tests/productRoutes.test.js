@@ -5,10 +5,22 @@ const Category = require('../models/Category');
 const jwt = require('jsonwebtoken');
 const sequelize = require('../config/database');
 
-jest.mock('../config/database', () => ({
-  authenticate: jest.fn(),
-  close: jest.fn(),
-}));
+// Мокаем sequelize
+jest.mock('../config/database', () => {
+  return {
+    define: jest.fn(() => {
+      return {
+        findByPk: jest.fn(),
+        findAll: jest.fn(),
+        create: jest.fn(),
+        update: jest.fn(),
+        destroy: jest.fn(),
+      };
+    }),
+    authenticate: jest.fn(),
+    close: jest.fn(),
+  };
+});
 
 // Мокаем модели
 jest.mock('../models/Product', () => ({
@@ -29,8 +41,10 @@ describe('Product Routes', () => {
     adminToken = jwt.sign(admin, process.env.JWT_SECRET, { expiresIn: '1h' });
   });
 
-  afterEach(() => {
-    jest.clearAllMocks(); // Очищаем моки после каждого теста
+  afterAll(async () => {
+    if (sequelize.close) {
+      await sequelize.close(); // Закрыть соединение с базой данных
+    }
   });
 
   afterAll(async () => {
