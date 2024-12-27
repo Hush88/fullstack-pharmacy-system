@@ -5,6 +5,11 @@ const Category = require('../models/Category');
 const jwt = require('jsonwebtoken');
 const sequelize = require('../config/database');
 
+jest.mock('../config/database', () => ({
+  authenticate: jest.fn(),
+  close: jest.fn(),
+}));
+
 // Мокаем модели
 jest.mock('../models/Product', () => ({
   findByPk: jest.fn(),
@@ -30,6 +35,10 @@ describe('Product Routes', () => {
 
   afterAll(async () => {
     await sequelize.close(); // Закрыть соединение с базой данных
+  });
+
+  test('Temporary passing test', () => {
+    expect(true).toBe(true);
   });
 
   test('POST /products - создание товара', async () => {

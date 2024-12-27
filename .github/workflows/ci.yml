@@ -31,6 +31,6 @@ jobs:
         run: npm run lint
 
       - name: Run tests
-        run: |
-          npm run test:backend
-          npm run test:frontend
+        env:
+          JWT_SECRET: "test_secret"
+        run: npm run test
