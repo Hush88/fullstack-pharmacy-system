@@ -30,6 +30,12 @@ jobs:
       - name: Run linters
         run: npm run lint
 
+      - name: Start frontend server
+        run: npm start --prefix frontend &
+      
+      - name: Wait for frontend server
+        run: npx wait-on http://localhost:3000
+
       - name: Run tests
         env:
           JWT_SECRET: "test_secret"
