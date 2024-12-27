@@ -20,12 +20,10 @@ router.post('/register', async (req, res) => {
     const user = await User.create({ username, password: passwordHash, role });
     res.status(201).json(user);
   } catch (error) {
-    res
-      .status(400)
-      .json({
-        message: 'Помилка під час реєстрації користувача',
-        error: error.message,
-      });
+    res.status(400).json({
+      message: 'Помилка під час реєстрації користувача',
+      error: error.message,
+    });
   }
 });
 

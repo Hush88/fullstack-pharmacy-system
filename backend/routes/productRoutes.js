@@ -27,12 +27,10 @@ router.post(
       });
       res.status(201).json(product);
     } catch (error) {
-      res
-        .status(400)
-        .json({
-          message: 'Помилка під час створення товару',
-          error: error.message,
-        });
+      res.status(400).json({
+        message: 'Помилка під час створення товару',
+        error: error.message,
+      });
     }
   }
 );
@@ -43,12 +41,10 @@ router.get('/', authenticateToken, async (req, res) => {
     const products = await Product.findAll();
     res.status(200).json(products);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: 'Помилка під час отримання товарів',
-        error: error.message,
-      });
+    res.status(500).json({
+      message: 'Помилка під час отримання товарів',
+      error: error.message,
+    });
   }
 });
 
@@ -80,12 +76,10 @@ router.put(
 
       res.status(200).json(product);
     } catch (error) {
-      res
-        .status(400)
-        .json({
-          message: 'Помилка під час оновлення товару',
-          error: error.message,
-        });
+      res.status(400).json({
+        message: 'Помилка під час оновлення товару',
+        error: error.message,
+      });
     }
   }
 );
@@ -107,12 +101,10 @@ router.delete(
       await product.destroy();
       res.status(200).json({ message: 'Товар успішно видалено' });
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          message: 'Помилка під час видалення товару',
-          error: error.message,
-        });
+      res.status(500).json({
+        message: 'Помилка під час видалення товару',
+        error: error.message,
+      });
     }
   }
 );

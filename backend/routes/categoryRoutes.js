@@ -17,12 +17,10 @@ router.post(
       const category = await Category.create({ name, description });
       res.status(201).json(category);
     } catch (error) {
-      res
-        .status(400)
-        .json({
-          message: 'Помилка під час створення категорії',
-          error: error.message,
-        });
+      res.status(400).json({
+        message: 'Помилка під час створення категорії',
+        error: error.message,
+      });
     }
   }
 );
@@ -33,12 +31,10 @@ router.get('/', authenticateToken, async (req, res) => {
     const categories = await Category.findAll();
     res.status(200).json(categories);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: 'Помилка під час отримання категорій',
-        error: error.message,
-      });
+    res.status(500).json({
+      message: 'Помилка під час отримання категорій',
+      error: error.message,
+    });
   }
 });
 
@@ -63,12 +59,10 @@ router.put(
 
       res.status(200).json(category);
     } catch (error) {
-      res
-        .status(400)
-        .json({
-          message: 'Помилка під час оновлення категорії',
-          error: error.message,
-        });
+      res.status(400).json({
+        message: 'Помилка під час оновлення категорії',
+        error: error.message,
+      });
     }
   }
 );
@@ -90,12 +84,10 @@ router.delete(
       await category.destroy();
       res.status(200).json({ message: 'Категорію успішно видалено' });
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          message: 'Помилка під час видалення категорії',
-          error: error.message,
-        });
+      res.status(500).json({
+        message: 'Помилка під час видалення категорії',
+        error: error.message,
+      });
     }
   }
 );

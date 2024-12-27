@@ -17,7 +17,7 @@ router.post(
       const { username, password, role } = req.body;
 
       if (!username || !password || !role) {
-        return res.status(400).json({ message: "Усі поля обов'язкові" });
+        return res.status(400).json({ message: 'Усі поля обовязкові' });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -30,12 +30,10 @@ router.post(
       res.status(201).json(user);
     } catch (error) {
       console.error('Помилка під час створення користувача:', error);
-      res
-        .status(500)
-        .json({
-          message: 'Помилка під час створення користувача',
-          error: error.message,
-        });
+      res.status(500).json({
+        message: 'Помилка під час створення користувача',
+        error: error.message,
+      });
     }
   }
 );
@@ -50,12 +48,10 @@ router.get(
       const users = await User.findAll();
       res.status(200).json(users);
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          message: 'Помилка під час отримання користувачів',
-          error: error.message,
-        });
+      res.status(500).json({
+        message: 'Помилка під час отримання користувачів',
+        error: error.message,
+      });
     }
   }
 );
@@ -84,12 +80,10 @@ router.put(
 
       res.status(200).json(user);
     } catch (error) {
-      res
-        .status(400)
-        .json({
-          message: 'Помилка під час оновлення користувача',
-          error: error.message,
-        });
+      res.status(400).json({
+        message: 'Помилка під час оновлення користувача',
+        error: error.message,
+      });
     }
   }
 );
@@ -111,12 +105,10 @@ router.delete(
       await user.destroy();
       res.status(200).json({ message: 'Користувача успішно видалено' });
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          message: 'Помилка під час видалення користувача',
-          error: error.message,
-        });
+      res.status(500).json({
+        message: 'Помилка під час видалення користувача',
+        error: error.message,
+      });
     }
   }
 );
