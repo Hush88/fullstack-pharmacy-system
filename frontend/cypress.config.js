@@ -1,4 +1,4 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   e2e: {
@@ -7,6 +7,6 @@ module.exports = defineConfig({
     },
     baseUrl: 'http://localhost:3000',
     viewportWidth: 1280,
-    viewportHeight: 720
+    viewportHeight: 720,
   },
 });

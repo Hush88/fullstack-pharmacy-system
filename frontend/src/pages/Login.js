@@ -22,8 +22,12 @@ function Login() {
 
   return (
     <Container maxWidth="xs">
-
-      <Typography variant="h4" align="center" gutterBottom style={{ margin: '100px 0 0 0' }}>
+      <Typography
+        variant="h4"
+        align="center"
+        gutterBottom
+        style={{ margin: '100px 0 0 0' }}
+      >
         Вхід у систему
       </Typography>
 
@@ -46,7 +50,13 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button type="submit" variant="contained" color="primary" style={{ marginTop: '15px' }} fullWidth>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: '15px' }}
+          fullWidth
+        >
           Увійти
         </Button>
       </form>

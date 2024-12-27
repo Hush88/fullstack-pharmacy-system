@@ -27,7 +27,8 @@ app.get('/', (req, res) => {
 
 // Синхронізація бази даних і запуск сервера
 if (process.env.NODE_ENV !== 'test') {
-  sequelize.sync({ force: false })
+  sequelize
+    .sync({ force: false })
     .then(() => {
       console.log('Всі моделі були успішно синхронізовані.');
       app.listen(PORT, () => {

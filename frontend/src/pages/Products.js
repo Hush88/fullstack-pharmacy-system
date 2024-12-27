@@ -1,9 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, TextField, Table, TableHead, TableRow, TableCell, TableBody, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar, Select, MenuItem, Box, Toolbar } from '@mui/material';
+import {
+  Container,
+  Typography,
+  Button,
+  TextField,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Snackbar,
+  Select,
+  MenuItem,
+  Box,
+  Toolbar,
+} from '@mui/material';
 import axios from '../api/axios';
 
 function Products() {
-
   const [products, setProducts] = useState([]);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -17,7 +36,6 @@ function Products() {
   const [sortOption, setSortOption] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
-
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -35,7 +53,6 @@ function Products() {
     };
     fetchProducts();
   }, []);
-
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -72,7 +89,6 @@ function Products() {
       handleSnackbarOpen('Помилка під час додавання товару');
     }
   };
-  
 
   const handleEditProductClick = (product) => {
     setSelectedProduct(product);
@@ -111,7 +127,6 @@ function Products() {
       handleSnackbarOpen('Помилка під час редагування товару');
     }
   };
-  
 
   const handleDeleteProduct = async (id) => {
     try {
@@ -120,15 +135,18 @@ function Products() {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
-      setFilteredProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product.id !== id)
+      );
+      setFilteredProducts((prevProducts) =>
+        prevProducts.filter((product) => product.id !== id)
+      );
       handleSnackbarOpen('Товар успішно видалено!');
     } catch (error) {
       console.error('Помилка під час видалення товару:', error);
       handleSnackbarOpen('Помилка під час видалення товару');
     }
   };
-  
 
   const handleSortChange = (event) => {
     const option = event.target.value;
@@ -143,8 +161,10 @@ function Products() {
       sortedProducts.sort((a, b) => b.price - a.price);
     } else if (option === 'category') {
       sortedProducts.sort((a, b) => {
-        const categoryA = categories.find((cat) => cat.id === a.categoryId)?.name || '';
-        const categoryB = categories.find((cat) => cat.id === b.categoryId)?.name || '';
+        const categoryA =
+          categories.find((cat) => cat.id === a.categoryId)?.name || '';
+        const categoryB =
+          categories.find((cat) => cat.id === b.categoryId)?.name || '';
         return categoryA.localeCompare(categoryB);
       });
     }
@@ -158,7 +178,10 @@ function Products() {
     const filtered = products.filter(
       (product) =>
         product.name.toLowerCase().includes(query) ||
-        categories.find((cat) => cat.id === product.categoryId)?.name.toLowerCase().includes(query)
+        categories
+          .find((cat) => cat.id === product.categoryId)
+          ?.name.toLowerCase()
+          .includes(query)
     );
 
     setFilteredProducts(filtered);
@@ -216,15 +239,30 @@ function Products() {
             <TableRow key={product.id}>
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.price}</TableCell>
-              <TableCell style={{ color: product.quantity < 50 ? 'red' : 'inherit' }}>
+              <TableCell
+                style={{ color: product.quantity < 50 ? 'red' : 'inherit' }}
+              >
                 {product.quantity}
               </TableCell>
-              <TableCell>{categories.find((category) => category.id === product.categoryId)?.name || 'Неизвестно'}</TableCell>
               <TableCell>
-                <Button variant="contained" color="primary" onClick={() => handleEditProductClick(product)}>
+                {categories.find(
+                  (category) => category.id === product.categoryId
+                )?.name || 'Неизвестно'}
+              </TableCell>
+              <TableCell>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleEditProductClick(product)}
+                >
                   Редагувати
                 </Button>
-                <Button variant="contained" color="secondary" onClick={() => handleDeleteProduct(product.id)} style={{ marginLeft: '10px' }}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => handleDeleteProduct(product.id)}
+                  style={{ marginLeft: '10px' }}
+                >
                   Видалити
                 </Button>
               </TableCell>
@@ -235,16 +273,25 @@ function Products() {
 
       <Box sx={{ flexGrow: 1 }} style={{ marginTop: '50px' }}>
         <Toolbar style={{ padding: '0px' }}>
-          <Typography component="div" sx={{ flexGrow: 1 }} variant="h4" gutterBottom style={{ margin: '0' }}>
+          <Typography
+            component="div"
+            sx={{ flexGrow: 1 }}
+            variant="h4"
+            gutterBottom
+            style={{ margin: '0' }}
+          >
             Додавання товарів
           </Typography>
 
-          <Button variant="contained" color="primary" onClick={handleAddProduct} >
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleAddProduct}
+          >
             Додати товар
           </Button>
         </Toolbar>
       </Box>
-
 
       <form>
         <TextField
@@ -284,7 +331,7 @@ function Products() {
             native: true,
           }}
         >
-          <option value="" >Оберіть категорію</option>
+          <option value="">Оберіть категорію</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -333,7 +380,7 @@ function Products() {
               native: true,
             }}
           >
-            <option value="" >Оберіть категорію</option>
+            <option value="">Оберіть категорію</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}

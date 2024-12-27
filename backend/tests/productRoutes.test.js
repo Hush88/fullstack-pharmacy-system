@@ -31,7 +31,6 @@ describe('Product Routes', () => {
   afterAll(async () => {
     await sequelize.close(); // Закрыть соединение с базой данных
   });
-  
 
   test('POST /products - создание товара', async () => {
     // Мок данных категории
@@ -64,8 +63,20 @@ describe('Product Routes', () => {
   test('GET /products - получение всех товаров', async () => {
     // Мок данных товаров
     Product.findAll.mockResolvedValue([
-      { id: 1, name: 'Test Product 1', price: 10.99, quantity: 100, categoryId: 1 },
-      { id: 2, name: 'Test Product 2', price: 20.99, quantity: 50, categoryId: 2 },
+      {
+        id: 1,
+        name: 'Test Product 1',
+        price: 10.99,
+        quantity: 100,
+        categoryId: 1,
+      },
+      {
+        id: 2,
+        name: 'Test Product 2',
+        price: 20.99,
+        quantity: 50,
+        categoryId: 2,
+      },
     ]);
 
     const res = await request(app)

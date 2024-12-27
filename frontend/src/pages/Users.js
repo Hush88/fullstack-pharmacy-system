@@ -1,5 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, TextField, Table, TableHead, TableRow, TableCell, TableBody, Box, Toolbar, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar } from '@mui/material';
+import {
+  Container,
+  Typography,
+  Button,
+  TextField,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Box,
+  Toolbar,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Snackbar,
+} from '@mui/material';
 import axios from '../api/axios';
 
 function Users() {
@@ -74,10 +91,14 @@ function Users() {
         }
       );
       setUsers((prevUsers) =>
-        prevUsers.map((user) => (user.id === selectedUser.id ? response.data : user))
+        prevUsers.map((user) =>
+          user.id === selectedUser.id ? response.data : user
+        )
       );
       setFilteredUsers((prevUsers) =>
-        prevUsers.map((user) => (user.id === selectedUser.id ? response.data : user))
+        prevUsers.map((user) =>
+          user.id === selectedUser.id ? response.data : user
+        )
       );
       setEditDialogOpen(false);
       handleSnackbarOpen('Користувача успішно оновлено!');
@@ -95,7 +116,9 @@ function Users() {
         },
       });
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
-      setFilteredUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+      setFilteredUsers((prevUsers) =>
+        prevUsers.filter((user) => user.id !== id)
+      );
       handleSnackbarOpen('Користувача успішно видалено!');
     } catch (error) {
       console.error('Помилка під час видалення користувача:', error);
@@ -177,7 +200,12 @@ function Users() {
 
       <Box sx={{ flexGrow: 1 }} style={{ marginTop: '50px' }}>
         <Toolbar style={{ padding: '0px' }}>
-          <Typography component="div" sx={{ flexGrow: 1 }} variant="h4" gutterBottom>
+          <Typography
+            component="div"
+            sx={{ flexGrow: 1 }}
+            variant="h4"
+            gutterBottom
+          >
             Додавання користувачів
           </Typography>
 

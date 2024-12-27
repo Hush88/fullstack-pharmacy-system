@@ -8,32 +8,31 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     mode: 'light',
-    
+
     primary: {
       light: '#80D197',
       main: '#589167',
     },
-    
+
     secondary: {
       main: '#A64452',
     },
-    
+
     background: {
       default: '#f5f5f5', // Цвет фона
-      paper: '#ffffff',  // Цвет карточек
+      paper: '#ffffff', // Цвет карточек
     },
-    
+
     text: {
       primary: '#000000',
       secondary: '#555555',
     },
 
     button: {
-     main: '#497756',
-    }
+      main: '#497756',
+    },
   },
 });
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
