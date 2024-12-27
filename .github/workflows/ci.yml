@@ -1,0 +1,49 @@
+name: CI Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-and-format:
+    name: Lint, Format, and Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # Клонування репозиторію
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Встановлення Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      # Встановлення залежностей
+      - name: Install dependencies
+        run: npm install
+
+      # Перевірка стилю комітів
+      - name: Check commit messages
+        uses: wagoid/commitlint-github-action@v5
+        with:
+          configFile: .commitlintrc.js
+
+      # Перевірка коду стилем і лінтером
+      - name: Run Prettier and ESLint
+        run: |
+          npm run lint
+          npm run format:check
+
+      # Запуск тестів
+      - name: Run Tests
+        run: npm test
+
+      # Перевірка на збірку
+      - name: Build application
+        run: npm run build
