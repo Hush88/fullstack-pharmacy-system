@@ -22,10 +22,15 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          cd backend && npm install
+          cd ../frontend && npm install
 
       - name: Run linters
         run: npm run lint
 
       - name: Run tests
-        run: npm test
+        run: |
+          npm run test:backend
+          npm run test:frontend
